@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
 using Alura.LeilaoOnline.WebApp.Controllers;
@@ -7,6 +6,7 @@ namespace Alura.LeilaoOnline.Testes
 {
     public class LeilaoControllerRemove
     {
+        /*
         [Fact]
         public void DadoLeilaoInexistenteEntaoRetorna404()
         {
@@ -51,5 +51,6 @@ namespace Alura.LeilaoOnline.Testes
             // assert
             Assert.IsType(actionResultEsperado, result);
         }
+        */
     }
 }

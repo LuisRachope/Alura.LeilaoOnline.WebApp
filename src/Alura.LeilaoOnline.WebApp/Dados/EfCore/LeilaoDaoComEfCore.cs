@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Alura.LeilaoOnline.WebApp.Dados
+namespace Alura.LeilaoOnline.WebApp.Dados.EfCore
 {
-    public class LeilaoDao
+    public class LeilaoDaoComEfCore : ILeilaoDao
     {
         AppDbContext _context;
 
-        public LeilaoDao()
+        public LeilaoDaoComEfCore()
         {
             _context = new AppDbContext();
         }
@@ -36,6 +36,18 @@ namespace Alura.LeilaoOnline.WebApp.Dados
         {
             _context.Leiloes.Remove(leilao);
             _context.SaveChangesAsync();
+        }
+
+
+        public IEnumerable<Leilao> Pesquisar(string termo)
+        {
+            return _context.Leiloes
+                .Include(l => l.Categoria)
+                .Where(l => string.IsNullOrWhiteSpace(termo) ||
+                    l.Titulo.ToUpper().Contains(termo.ToUpper()) ||
+                    l.Descricao.ToUpper().Contains(termo.ToUpper()) ||
+                    l.Categoria.Descricao.ToUpper().Contains(termo.ToUpper())
+                );
         }
     }
 }
