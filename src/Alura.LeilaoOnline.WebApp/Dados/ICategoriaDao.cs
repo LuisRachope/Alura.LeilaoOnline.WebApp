@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Alura.LeilaoOnline.WebApp.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Alura.LeilaoOnline.WebApp.Dados
 {
-    public class ICategoriaDao
+    public interface ICategoriaDao
     {
+        IEnumerable<Categoria> ConsultaCategorias();
+        Categoria ConsultaCategoriaPorId(int id);
     }
 }

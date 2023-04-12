@@ -1,9 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Alura.LeilaoOnline.WebApp.Dados;
 using Alura.LeilaoOnline.WebApp.Dados.EfCore;
 using Alura.LeilaoOnline.WebApp.Services;
 using Alura.LeilaoOnline.WebApp.Services.Handlers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Alura.LeilaoOnline.WebApp
 {
@@ -11,15 +11,15 @@ namespace Alura.LeilaoOnline.WebApp
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ILeilaoDao, LeilaoDaoComEfCore>();
             services.AddTransient<ICategoriaDao, CategoriaDaoComEfCore>();
-            services.AddTransient<IProdutoServices, DefaultProdutoService>();
-            services.AddTransient<IAdminService, DefaultAdminService>();
+            services.AddTransient<ILeilaoDao, LeilaoDaoComEfCore>();
+            services.AddTransient<IAdminService, ArquivamentoAdminService>();
+            services.AddTransient<IProdutoService, DefaultProdutoService>();
             services.AddDbContext<AppDbContext>();
 
             services
                 .AddControllersWithViews()
-                .AddNewtonsoftJson(options => 
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });

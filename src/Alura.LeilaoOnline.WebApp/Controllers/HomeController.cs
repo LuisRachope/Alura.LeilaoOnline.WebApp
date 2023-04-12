@@ -1,21 +1,19 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Alura.LeilaoOnline.WebApp.Dados;
+using Alura.LeilaoOnline.WebApp.Services;
 
 namespace Alura.LeilaoOnline.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        IHomeDao _dao;
+        IProdutoService _service;
 
-        public HomeController(IHomeDao dao)
+        public HomeController(IProdutoService service)
         {
-            _dao = dao;
+            _service = service;
         }
 
-        public IActionResult Index() => View(_dao.BuscarCategorias());
+        public IActionResult Index() => View(_service.ConsultaCategoriasComTotalDeLeiloesEmPregao());
 
         [Route("[controller]/StatusCode/{statusCode}")]
         public IActionResult StatusCodeError(int statusCode)
@@ -25,14 +23,14 @@ namespace Alura.LeilaoOnline.WebApp.Controllers
         }
 
         [Route("[controller]/Categoria/{categoria}")]
-        public IActionResult Categoria(int categoria) => View(_dao.BuscarPorId(categoria));
+        public IActionResult Categoria(int categoria) => View(_service.ConsultaCategoriaPorIdComLeiloesEmPregao(categoria));
 
         [HttpPost]
         [Route("[controller]/Busca")]
         public IActionResult Busca(string termo)
         {
             ViewData["termo"] = termo;
-            return View(_dao.Pesquisar(termo));
+            return View(_service.PesquisaLeiloesEmPregaoPorTermo(termo));
         }
     }
 }
